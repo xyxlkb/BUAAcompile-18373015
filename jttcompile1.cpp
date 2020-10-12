@@ -1,18 +1,17 @@
-#include<stdio.h>
-#include<string.h>
-#include<stdlib.h>
+#include<cstdio>
+#include<cstring>
+#include<cstdlib>
 #include<ctype.h>
+using namespace std;
 
 char* key[7]={"BEGIN","END","FOR","DO","IF","THEN","ELSE"};
 char symbol[7]={':' , '+' , '*' , ',' , '(' , ')' , '='};
 char* kout[8]={"","Begin","End","For","Do","If","Then","Else"};
 char* sout[7]={"Colon","Plus","Star","Comma","LParenthesis","RParenthesis","Assign"};
 char* err="Unknown";
-
-int i;
  
 int reserve(char* t){
-    for(i=0; i<7; i++){
+    for(int i=0; i<7; i++){
         if(strcmp(key[i],t)==0) return i+1;
     }
     return 0;
@@ -21,16 +20,16 @@ int reserve(char* t){
 int main(int argc,char* argv[]){
     char ch;
     char token[1000];
-    int flag;
+    int flag; 
 
     char *fname="a.txt";
     FILE *in;
     in=fopen(fname,"r");
 
     ch = fgetc(in);
-    while(ch != EOF){  //Ö»ÒªÃ»ÓÐ¶Áµ½×îºó 
+    while(ch != EOF){  //åªè¦æ²¡æœ‰è¯»åˆ°æœ€åŽ 
        
-        if(isspace(ch)){  //¿Õ¸ñ¾ÍÒ»Ö±¶Á 
+        if(isspace(ch)){  //ç©ºæ ¼å°±ä¸€ç›´è¯» 
             ch = fgetc(in);
             continue;
         }
@@ -38,9 +37,9 @@ int main(int argc,char* argv[]){
         memset(token,'\0',sizeof(token));
         flag = 0;
 
-        if(isalpha(ch)){  //Èç¹ûÊÇ×Ö·û 
+        if(isalpha(ch)){  //å¦‚æžœæ˜¯å­—ç¬¦ 
             flag = 1;
-            while( ch!=EOF && (isalpha(ch) || isdigit(ch)) ){  //»ñÈ¡µ¥´Ê³¤¶È 
+            while( ch!=EOF && (isalpha(ch) || isdigit(ch)) ){  //èŽ·å–å•è¯é•¿åº¦ 
                 int length = strlen(token);
                 token[length] = ch;
                 ch = fgetc(in);
@@ -49,7 +48,7 @@ int main(int argc,char* argv[]){
             if(i > 0) printf("%s\n",kout[i]);
             else printf("Ident(%s)\n",token);
         }
-        else if(isdigit(ch)){  //Èç¹ûÊÇÊý×Ö 
+        else if(isdigit(ch)){  //å¦‚æžœæ˜¯æ•°å­— 
             flag = 1;
             while(isdigit(ch)){
                 int len = strlen(token);
@@ -60,7 +59,7 @@ int main(int argc,char* argv[]){
         }
         else{
             //printf("other\n");
-            for(i = 1;i <= 5; i++){
+            for(int i = 1;i <= 5; i++){
                 if(ch == symbol[i]){
                     flag = 1;
                     printf("%s\n",sout[i]);
