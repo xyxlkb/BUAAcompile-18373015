@@ -1,16 +1,15 @@
-#include<cstdio>
-#include<cstring>
-#include<cstdlib>
+#include<stdio.h>
+#include<string.h>
+#include<stdlib.h>
 #include<ctype.h>
-using namespace std;
+
 
 char* key[7]={"BEGIN","END","FOR","DO","IF","THEN","ELSE"};
 char symbol[7]={':' , '+' , '*' , ',' , '(' , ')' , '='};
 char* kout[8]={"","Begin","End","For","Do","If","Then","Else"};
 char* sout[7]={"Colon","Plus","Star","Comma","LParenthesis","RParenthesis","Assign"};
-char* err="Unknown";
  
-int reserve(char* t){
+int reserve(char* t){   //看看是第几个 
     for(int i=0; i<7; i++){
         if(strcmp(key[i],t)==0) return i+1;
     }
@@ -30,7 +29,7 @@ int main(int argc,char* argv[]){
     while(ch != EOF){  //只要没有读到最后 
        
         if(isspace(ch)){  //空格就一直读 
-            ch = fgetc(in);
+            ch = fgetc(in) ;
             continue;
         }
 
@@ -59,7 +58,7 @@ int main(int argc,char* argv[]){
         }
         else{
             //printf("other\n");
-            for(int i = 1;i <= 5; i++){
+            for(int i = 1;i <= 5; i++){  //如果是某一个符号  
                 if(ch == symbol[i]){
                     flag = 1;
                     printf("%s\n",sout[i]);
@@ -70,18 +69,18 @@ int main(int argc,char* argv[]){
                 flag = 1;
                 char tmp;
                 tmp = fgetc(in);
-                if(tmp == symbol[6]){
+                if(tmp == symbol[6]){   //:=
                     printf("%s\n",sout[6]);
                 }
                 else{
-                    fseek(in,-1,SEEK_CUR);
+                    fseek(in,-1,SEEK_CUR);  //就返回一位 
                     printf("%s\n",sout[0]);
                 }
             }
             ch = fgetc(in);
         }
         if(flag == 0){
-            printf("%s\n",err);
+            printf("Unknown\n");
             break;
         }
     }
