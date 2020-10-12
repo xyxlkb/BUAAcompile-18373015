@@ -1,6 +1,5 @@
-FROM alpine:3
-RUN apk add cmake gcc g++ libgcc build-base make --no-cache
+FROM gcc:10
 WORKDIR /app/
 COPY ./* ./
-RUN g++ jttcompile1.c -o main
-RUN chmod +x main
+RUN gcc jttcompile1.c -o program
+RUN chmod +x program
